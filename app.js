@@ -90,24 +90,22 @@ var items = [
   },
 ];
 
-function updateCart() {
+function updateCart(){
   let cart = 0;
   for (index = 0; index < items.length; index++) {
     cart = cart + items[index].quantity;
   }
   cartValue.innerHTML = cart;
 }
-
-for (let i=0; i<addButtons.length; i++) {
+for (let i = 0; i < addButtons.length; i++) {
   addButtons[i].onclick = (e) => {
     items[i].quantity++;
     updateCart();
+    
   };
 }
-
 var finalDollars = 0;
 var finalCents = 0;
-
 function updatePrice() {
   let totalPriceInCents = 0;
 
@@ -119,24 +117,21 @@ function updatePrice() {
   finalDollars = Math.floor(totalPriceInCents / 100);
   finalCents = totalPriceInCents % 100;
 }
-
-
 cartButton.onclick = () => {
   updatePrice();
-
+  if(cartValue.innerText==0){
+    alert("You must have at least one item in your shopping cart before checking out.");
+    return
+  }
+  var text =""
 
   for (let index = 0; index < items.length; index++) {
     if (items[index].quantity != 0) {
-      console.log(
-        "Item name: " +
-          items[index].name +
-          " - Quantity: " +
-          items[index].quantity
-      );
+      text+=  "Item name: " + items[index].name + " - Quantity: " + items[index].quantity + " "
+   
     }
   }
-
-  console.log(
-    "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
-  );
+  text+=  "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
+  console.log("text: ",text);
+  window.open("https://wa.me/919047526471?text="+text, "_self")
 };
